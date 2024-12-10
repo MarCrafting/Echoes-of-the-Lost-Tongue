@@ -1,0 +1,1 @@
+This folder contains textures, models, and other visual assets.
