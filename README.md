@@ -1,5 +1,6 @@
 # Echoes-of-the-Lost-Tongue
- ![ELT](https://github.com/user-attachments/assets/26a2121b-cf43-4c6e-a69c-0de1f74caef6)
+ ![png](https://github.com/user-attachments/assets/9e8a4c47-b21e-418d-b217-fa14a5386ece)
+
 
 A language learning RPG providing the immeersive environment best suited for learning new languages.
 ![GitHub last commit](https://img.shields.io/github/last-commit/MarCrafting/Echoes-of-the-Lost-Tongue)
