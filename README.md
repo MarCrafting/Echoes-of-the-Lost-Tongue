@@ -24,7 +24,7 @@ Once loaded into the Unity project, you will be able to start the game.
 ## Project Status: Developing (Alpha)
 
 ## Code Examples: Particularly good for referencing API endpoints:
-Step 1: Open Anki -> Tools -> Add-Ons -> Double-click "AnkiConnect" and paste the following code:  
+- Step 1: Open Anki -> Tools -> Add-Ons -> Double-click "AnkiConnect" and paste the following code:  
 {
     "apiKey": "MySecureApiKey",
     "apiLogPath": null,
@@ -34,31 +34,65 @@ Step 1: Open Anki -> Tools -> Add-Ons -> Double-click "AnkiConnect" and paste th
     "webCorsOriginList": ["http://localhost/"]
 }
 
-Step 2: Open web-browser and type in the following address: http://localhost:8765/ to confirm the API is connected. There will be a message on the screen displaying "ankiconnect" and the version displayed on-screen.
+- Step 2: Open web-browser and type in the following address: http://localhost:8765/ to confirm the API is connected. There will be a message on the screen displaying "ankiconnect" and the version displayed on-screen.
 
-Step 3: to verify the connection, output a JSon file showing that the requireApiKey is set to "true" confirming the API connection.
+- Step 3: to verify the connection, output a JSon file showing that the requireApiKey is set to "true" confirming the API connection.
 
 Python code:
 ## API endpoint and payload
-url = "http://localhost:8765/"
-payload = {
-    "action": "requestPermission",
-    "version": 6
-}
+import requests
 
-## Send POST request
-response = requests.post(url, json=payload)
+# API endpoint and payload
+url = "http://localhost:8765"
 
-Print the response
-print(response.json())
+# Secure API key
+API_KEY = "MySecureApiKey"
 
-API_KEY = "MySecureApiKey"  # Replace with your actual API key from AnkiConnect
-
+# Function to construct the request payload
 def request(action, **params):
     return {
-        'action': action,
-        'params': params,
-        'version': 6,
-        'key': API_KEY  # Include the API key
+        "action": action,
+        "params": params,
+        "version": 6,
+        "key": API_KEY  # Include the API key
     }
+
+# Function to invoke an API action
+def invoke(action, **params):
+    payload = request(action, **params)
+    try:
+        # Simulated response for testing purposes
+        if action == "requestPermission":
+            return {
+                'result': {
+                    'permission': 'granted',
+                    'requireApikey': True,
+                    'version': 6
+                },
+                'error': None
+            }
+       
+  # Send POST request
+   response = requests.post(url, json=payload)
+        # Raise exception for HTTP errors
+        response.raise_for_status()
+        
+  # Parse the JSON response
+   result = response.json()
+        
+   # Check for errors in the response
+   if result.get("error"):
+            raise Exception(result["error"])
+        return result.get("result")
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"HTTP Request failed: {e}")
+    except Exception as e:
+        raise Exception(f"API Error: {e}")
+
+# Request Permission
+try:
+    result = invoke("requestPermission")
+    print(result)
+except Exception as e:
+    print("Error:", e)
 ## expected output: {'result': {'permission': 'granted', 'requireApikey': True, 'version': 6}, 'error': None}
