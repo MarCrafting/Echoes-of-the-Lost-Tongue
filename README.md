@@ -1,4 +1,4 @@
-# Echoes-of-the-Lost-Tongue
+# Echoes of the Lost Tongue
  ![png](https://github.com/user-attachments/assets/9e8a4c47-b21e-418d-b217-fa14a5386ece)
 
 > A language learning RPG providing the immersive environment best suited for learning new languages.
@@ -7,7 +7,7 @@
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/marcrafting/echoes-of-the-lost-tongue)
 ![GitHub contributors](https://img.shields.io/github/contributors/marcrafting/echoes-of-the-lost-tongue)
 
-## Setup
+## Anki Setup
 1. Download Anki
    * Head over to [Anki's download page](aaps.ankiweb.net) and click "Download" to get Anki on your computer.
 2. Install Anki-Connect
@@ -34,6 +34,9 @@ curl localhost:8765 -X POST -d "{\"action\":\"requestPermission\", \"version\":6
 ~~~
 The result of the ```permission``` field should return ```granted``` to show a valid connection has been made.
 Anki must remain running to hold a connection.
+
+## Unity Setup
+(To be documented...)
 
 ## Tech
 ### Developing environment
