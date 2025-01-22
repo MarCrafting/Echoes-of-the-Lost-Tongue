@@ -40,7 +40,7 @@ Anki must remain running to hold a connection.
 * UnityHub V3.11.0 (Editor Version 6000.0.29f1)
 * Visual Studio Code(Version 1.96.3)/Community 22(Version 17.12.3)
 ### Resource
-* Anki
+* Anki (Version 24.11)
 ### API
 * AnkiConnect
 
