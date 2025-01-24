@@ -36,7 +36,11 @@ The result of the ```permission``` field should return ```granted``` to show a v
 Anki must remain running to hold a connection.
 
 ## Unity Setup
-(To be documented...)
+```Coming Soon...```
+(For Devs)
+Copy the repository to your local machine.
+Launch UnityHub and select ```Add project from disk``` item from the ```Add``` drop down menu.
+Once leaded into the Unity project, you will be able to start the game.
 
 ## Tech
 ### Developing environment
@@ -46,10 +50,5 @@ Anki must remain running to hold a connection.
 * Anki (Version 24.11)
 ### API
 * AnkiConnect
-
-## Setup
-Copy the repository to your local machine.
-Launch UnityHub and select "Add project from disk" item from the "Add" drop down menu.
-Once loaded into the Unity project, you will be able to start the game.
 
 ## Project Status: Developing (Alpha)
