@@ -1,8 +1,7 @@
 using System.Collections;
-using System.Net.Cache;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.Networking;
+using Newtonsoft.Json;
 
 public class LogicScript : MonoBehaviour
 {
@@ -12,10 +11,11 @@ public class LogicScript : MonoBehaviour
     void Start()
     {
         //StartCoroutine(GetRequest("http://localhost:8765"));
+        
+        createDeck("TestDeck");
+        // deleteDecks(new string[] {"TestDeck"});
 
-        request = new AnkiRequest();
-        request.action = "deckNames";
-        StartCoroutine(PostRequest("http://localhost:8765", JsonUtility.ToJson(request)));
+        StartCoroutine(PostRequest("http://localhost:8765", JsonConvert.SerializeObject(request)));
     }
 
     IEnumerator GetRequest(string uri)
@@ -51,12 +51,51 @@ public class LogicScript : MonoBehaviour
             Debug.Log("Received: " + uwr.downloadHandler.text);
         }
     }
+
+    public void createDeck(string name)
+    {
+        request.action = "createDeck";
+        request.@params = new CreateDeck {
+            deck = name
+        };
+    }
+
+    public void deleteDecks(string[] names)
+    {
+        request.action = "deleteDecks";
+        request.@params = new DeleteDecks {
+            decks = names, cardsToo = true
+        };
+    }
 }
 
+// Base class for different types of parameters
 [System.Serializable]
 public class AnkiRequest
 {
     public string action;
-    public object @params;
+    public Params @params;  // Use the base class/interface type
     public int version = 6;
+}
+
+// Base class for parameters
+[System.Serializable]
+public class Params
+{
+    // This is just a base class. It can be empty or contain common functionality if needed.
+}
+
+// Derived class for CreateDeck
+[System.Serializable]
+public class CreateDeck : Params
+{
+    public string deck;
+}
+
+// Derived class for DeleteDecks
+[System.Serializable]
+public class DeleteDecks : Params
+{
+    public string[] decks;
+    public bool cardsToo;
 }
