@@ -7,9 +7,6 @@
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/marcrafting/echoes-of-the-lost-tongue)
 ![GitHub contributors](https://img.shields.io/github/contributors/marcrafting/echoes-of-the-lost-tongue)
 
-## Disclaimer 
-Unfortunately, the AnkiConnect API is designed to run as a local server within the Anki app, which means it requires the Anki app to be open and listening at http://localhost:8765. There is no way to bypass this requirement entirely, as AnkiConnect is tightly coupled with the Anki desktop application. Please follow the steps provided below to ensure our game runs without errors.
-
 ## Anki Setup
 1. Download Anki
    * Head over to [Anki's download page](aaps.ankiweb.net) and click "Download" to get Anki on your computer.
