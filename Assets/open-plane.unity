@@ -445,6 +445,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1073642850}
   - component: {fileID: 1073642851}
+  - component: {fileID: 1073642853}
+  - component: {fileID: 1073642852}
   m_Layer: 0
   m_Name: Third Person Player
   m_TagString: Untagged
@@ -480,8 +482,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3673be5630093cc479a45e1f91b1ef82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 2
-  jumpHeight: 4
+--- !u!114 &1073642852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073642849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0c0640a0597f9547ace0bb3d6b92129, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1073642853}
+  cam: {fileID: 1303669834}
+  speed: 6
+  turnSmoothTime: 0.1
+--- !u!143 &1073642853
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073642849}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 1.95
+  m_Radius: 0.51
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1202546005
 GameObject:
   m_ObjectHideFlags: 0
