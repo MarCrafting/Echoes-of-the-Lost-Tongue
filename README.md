@@ -3,7 +3,7 @@
 
 > A language learning RPG providing the immersive environment best suited for learning new languages.
 
-![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/marcrafting/echoes-of-the-lost-tongue/Anki-API)
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/marcrafting/echoes-of-the-lost-tongue/Anki-API)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/marcrafting/echoes-of-the-lost-tongue)
 
 ## Anki Setup
