@@ -6,7 +6,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public CharacterController controller;
     public Transform cam;
 
-    public float speed = 6;
+    public float speed = 6; // char movement speed
 
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
@@ -15,9 +15,9 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
+        float horizontal = Input.GetAxisRaw("Horizontal");  // left, right (a, d)
+        float vertical = Input.GetAxisRaw("Vertical");  // up, down (w, s)
+        Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;    // direction to move
 
         if (direction.magnitude >= 0.1)
         {
