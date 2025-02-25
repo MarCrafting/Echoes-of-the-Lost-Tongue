@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class HiraganaDisplay : MonoBehaviour
 {
-    public TextMeshProUGUI spellingText; // Displays the Hiragana spelling
+    public TextMeshProUGUI wordText; // Displays the Hiragana spelling
     public TextMeshProUGUI exampleSentenceText; // Displays the Example Sentence
 
     public Button playSpellingAudioButton; // Button to play the spelling audio
@@ -48,7 +48,7 @@ public class HiraganaDisplay : MonoBehaviour
         var card = deckCards[currentCardIndex];
 
         // Display Spelling
-        spellingText.text = card.Spellings;
+        wordText.text = card.ExampleWord;
 
         // Display Example Sentence
         exampleSentenceText.text = card.ExampleSentence;
@@ -121,7 +121,7 @@ public class HiraganaDisplay : MonoBehaviour
         exampleSentenceText.text = isCurrentlyJapanese ? card.SentenceTranslation : card.ExampleSentence;
 
         // Toggle Spellings Field
-        spellingText.text = isCurrentlyJapanese ? card.WordTranslation : card.Spellings;
+        wordText.text = isCurrentlyJapanese ? card.WordTranslation : card.ExampleWord;
     }
 
 

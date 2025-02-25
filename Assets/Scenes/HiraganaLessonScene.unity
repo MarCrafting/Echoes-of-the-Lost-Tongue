@@ -378,7 +378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6c7492bac4582745b84e94aef15e06b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spellingText: {fileID: 1054732384}
+  wordText: {fileID: 1054732384}
   exampleSentenceText: {fileID: 1850577893}
   playSpellingAudioButton: {fileID: 1311804591}
   playSentenceAudioButton: {fileID: 1525145095}
@@ -873,7 +873,7 @@ GameObject:
   - component: {fileID: 1054732385}
   - component: {fileID: 1054732384}
   m_Layer: 5
-  m_Name: spellingText
+  m_Name: wordText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -918,7 +918,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Spellings FIeld Loading...
+  m_text: Word Field Loading...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e78153695d1b6164e92d565ed2322c40, type: 2}
   m_sharedMaterial: {fileID: -6263904988891093240, guid: e78153695d1b6164e92d565ed2322c40, type: 2}
@@ -2282,7 +2282,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Sentence FIeld Loading...
+  m_text: Sentence Field Loading...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e78153695d1b6164e92d565ed2322c40, type: 2}
   m_sharedMaterial: {fileID: -6263904988891093240, guid: e78153695d1b6164e92d565ed2322c40, type: 2}

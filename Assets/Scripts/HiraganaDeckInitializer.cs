@@ -40,7 +40,7 @@ public static class HiraganaDeckInitializer
 
                 DeckCards.Add(new HiraganaCard
                 {
-                    Spellings = fields.ContainsKey("Spellings") ? fields.Spellings.value ?? "N/A" : "N/A",
+                    ExampleWord = fields.ContainsKey("Example Word") ? fields["Example Word"].value ?? "N/A" : "N/A",
                     WordTranslation = fields.ContainsKey("Word Translation") ? fields["Word Translation"].value ?? "N/A" : "N/A",
                     ExampleSentence = fields.ContainsKey("Example Sentence") ? fields["Example Sentence"].value ?? "N/A" : "N/A",
                     SentenceTranslation = fields.ContainsKey("Sentence Translation") ? fields["Sentence Translation"].value ?? "N/A" : "N/A",
@@ -72,7 +72,7 @@ public static class HiraganaDeckInitializer
 // Represents a single Anki Hiragana flashcard.
 public class HiraganaCard
 {
-    public string Spellings { get; set; }
+    public string ExampleWord { get; set; }
     public string WordTranslation { get; set; }
     public string ExampleSentence { get; set; }
     public string SentenceTranslation { get; set; }
