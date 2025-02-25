@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ShortcutKeyHandler : MonoBehaviour
 {
-    public HiraganaDisplay spellingDisplay;
+    public HiraganaDisplay shortcutDisplay;
 
     private void Update()
     {   
@@ -10,14 +10,26 @@ public class ShortcutKeyHandler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             Debug.Log("Replay Audio Triggered");
-            spellingDisplay.ReplayAudio();
+            shortcutDisplay.ReplayAudio();
         }
 
         // Translate Text to English
         if (Input.GetKeyDown(KeyCode.T))
         {
             Debug.Log("Translate Toggle Triggered");
-            spellingDisplay.ToggleTranslation();
+            shortcutDisplay.ToggleTranslation();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("Next Section Triggered");
+            shortcutDisplay.NextSection();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            Debug.Log("Previous Section Triggered");
+            shortcutDisplay.PreviousSection();
         }
     }
 }

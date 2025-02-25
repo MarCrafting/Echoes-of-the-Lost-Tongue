@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
@@ -10,7 +10,7 @@ public class HiraganaDisplay : MonoBehaviour
     public TextMeshProUGUI spellingsText; // Displays the Hiragana Spelling
     public TextMeshProUGUI wordText; // Displays the Hiragana Example Word
     public TextMeshProUGUI exampleSentenceText; // Displays the Example Sentence
-
+    
     public Button playSpellingsAudioButton; // Button to play the spellings audio
     public Button playWordAudioButton; // Button to play the word audio
     public Button playSentenceAudioButton; // Button to play the example sentence audio
@@ -20,6 +20,7 @@ public class HiraganaDisplay : MonoBehaviour
     private List<HiraganaCard> deckCards;
     private int currentCardIndex = 0;
     private string lastPlayedAudioPath = "";
+    
 
     private async void Start()
     {
@@ -38,10 +39,18 @@ public class HiraganaDisplay : MonoBehaviour
         Debug.Log($"Deck successfully loaded! {deckCards.Count} cards found.");
         DisplayCurrentCard();
 
-        //Assign Buttons
+        // Assign Buttons
         playSpellingsAudioButton.onClick.AddListener(PlaySpellingsAudio);
         playWordAudioButton.onClick.AddListener(PlayWordAudio);
         playSentenceAudioButton.onClick.AddListener(PlaySentenceAudio);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space)) NextSection();
+        if (Input.GetKeyDown(KeyCode.Backspace)) PreviousSection();
+        if (Input.GetKeyDown(KeyCode.R)) ReplayAudio();
+        if (Input.GetKeyDown(KeyCode.T)) ToggleTranslation();
     }
 
     private void DisplayCurrentCard()
@@ -50,19 +59,15 @@ public class HiraganaDisplay : MonoBehaviour
 
         var card = deckCards[currentCardIndex];
 
-        // Display Example Word
-        wordText.text = card.ExampleWord;
-
-        // Display Example Sentence
-        exampleSentenceText.text = card.ExampleSentence;
-
-        // Display Spellings Text
+        // Display Hiragana by default
         spellingsText.text = card.Spellings;
+        wordText.text = card.ExampleWord;
+        exampleSentenceText.text = card.ExampleSentence;
+        
     }
 
     public void PlayWordAudio()
     {
-        Debug.Log("Playing Word Audio...");
         PlayAudio(deckCards[currentCardIndex].WordAudio);
     }
 
@@ -72,11 +77,11 @@ public class HiraganaDisplay : MonoBehaviour
 
         if (!string.IsNullOrEmpty(card.SpellingsAudio) && card.SpellingsAudio != "N/A")
         {
-            PlayAudio(card.SpellingsAudio);  //Example Spellings audio
+            PlayAudio(card.SpellingsAudio);  // Example Spellings audio
         }
         else
         {
-            Debug.LogError("No example sentence audio available for this card.");
+            Debug.LogError("No spellings audio available for this card.");
         }
     }
 
@@ -86,7 +91,7 @@ public class HiraganaDisplay : MonoBehaviour
 
         if (!string.IsNullOrEmpty(card.SentenceAudio) && card.SentenceAudio != "N/A")
         {
-            PlayAudio(card.SentenceAudio);  //Example sentence audio
+            PlayAudio(card.SentenceAudio);  // Example sentence audio
         }
         else
         {
@@ -114,39 +119,42 @@ public class HiraganaDisplay : MonoBehaviour
         StartCoroutine(PlayAudioClip(filePath));
     }
 
-    // R key press will replay last played audio (last playback button pressed)
     public void ReplayAudio()
     {
         if (!string.IsNullOrEmpty(lastPlayedAudioPath))
         {
             PlayAudio(lastPlayedAudioPath);
         }
-        else
-        {
-            Debug.LogWarning("No audio has been played yet.");
-        }
     }
 
-    // T key will translate all of the Hiragana fields to English
     public void ToggleTranslation()
     {
         if (deckCards.Count == 0) return;
 
         var card = deckCards[currentCardIndex];
 
-        // Check if the text is currently in Japanese or English
-        bool isCurrentlyJapanese = exampleSentenceText.text == card.ExampleSentence;
+        // Check if the spellings text is currently in Japanese or English
+        bool isCurrentlyJapanese = spellingsText.text == card.Spellings;
 
-        // Toggle Example Sentence
-        exampleSentenceText.text = isCurrentlyJapanese ? card.SentenceTranslation : card.ExampleSentence;
-
-        // Toggle Word Field
-        wordText.text = isCurrentlyJapanese ? card.WordTranslation : card.ExampleWord;
-
-        // Toggle Spellings Field
+        // Toggle text fields to English or back to Japanese
         spellingsText.text = isCurrentlyJapanese ? card.SpellingsTranslation : card.Spellings;
+        wordText.text = isCurrentlyJapanese ? card.WordTranslation : card.ExampleWord;
+        exampleSentenceText.text = isCurrentlyJapanese ? card.SentenceTranslation : card.ExampleSentence;
     }
 
+
+
+    public void NextSection()
+    {
+        currentCardIndex = (currentCardIndex + 1) % deckCards.Count;
+        DisplayCurrentCard();
+    }
+
+    public void PreviousSection()
+    {
+        currentCardIndex = Mathf.Max(0, currentCardIndex - 1);
+        DisplayCurrentCard();
+    }
 
     private IEnumerator PlayAudioClip(string filePath)
     {
