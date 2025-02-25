@@ -164,7 +164,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spellingText: {fileID: 1054732384}
-  playAudioButton: {fileID: 1311804591}
+  exampleSentenceText: {fileID: 1850577893}
+  playSpellingAudioButton: {fileID: 1311804591}
+  playSentenceAudioButton: {fileID: 1525145095}
   audioSource: {fileID: 1749717268}
 --- !u!1 &681246941
 GameObject:
@@ -258,7 +260,7 @@ GameObject:
   - component: {fileID: 810107232}
   - component: {fileID: 810107231}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Lesson_ALL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -359,7 +361,7 @@ GameObject:
   - component: {fileID: 1054732385}
   - component: {fileID: 1054732384}
   m_Layer: 5
-  m_Name: SpellingText
+  m_Name: spellingText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -514,8 +516,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1054732383}
-  - {fileID: 1850577892}
   - {fileID: 1311804590}
+  - {fileID: 1850577892}
   - {fileID: 1525145094}
   m_Father: {fileID: 810107234}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -953,7 +955,7 @@ GameObject:
   - component: {fileID: 1525145096}
   - component: {fileID: 1525145095}
   m_Layer: 5
-  m_Name: PlaySentenceAudioButton
+  m_Name: playSentenceAudioButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1430,7 +1432,7 @@ GameObject:
   - component: {fileID: 1850577894}
   - component: {fileID: 1850577893}
   m_Layer: 5
-  m_Name: SentenceText
+  m_Name: exampleSentenceText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

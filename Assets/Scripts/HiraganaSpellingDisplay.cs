@@ -7,47 +7,66 @@ using UnityEngine.UI;
 
 public class HiraganaSpellingDisplay : MonoBehaviour
 {
-    //Text boxes, Buttons, etc. here:
-    public TextMeshProUGUI spellingText;
-    public Button playAudioButton;
+    public TextMeshProUGUI spellingText; // Displays the Hiragana spelling
+    public TextMeshProUGUI exampleSentenceText; // Displays the Example Sentence
+
+    public Button playSpellingAudioButton; // Button to play the spelling audio
+    public Button playSentenceAudioButton; // Button to play the example sentence audio
+
     public AudioSource audioSource;
 
-    private List<HiraganaCard> deckCards = new List<HiraganaCard>();
+    private List<HiraganaCard> deckCards;
     private int currentCardIndex = 0;
     private string lastPlayedAudioPath = "";
 
     private async void Start()
     {
-        // Initialize deck and load cards
+        Debug.Log("Initializing Hiragana deck...");
+
         await HiraganaDeckInitializer.InitializeDeckAsync("Japanese Phonetic Writing System - Free Refold Deck::Refold Hiragana");
+
         deckCards = HiraganaDeckInitializer.GetDeckCards();
 
-        if (deckCards.Count > 0)
+        if (deckCards == null || deckCards.Count == 0)
         {
-            DisplayCurrentCard();
+            Debug.LogError("Deck is empty or not initialized. Check Anki response.");
+            return;
         }
 
-        // Assign button click event to play audio
-        playAudioButton.onClick.AddListener(PlaySpellingAudio);
+        Debug.Log($"Deck successfully loaded! {deckCards.Count} cards found.");
+        DisplayCurrentCard();
     }
+
+
 
     private void DisplayCurrentCard()
     {
         if (deckCards.Count == 0) return;
 
         var card = deckCards[currentCardIndex];
+
+        // Display Spelling
         spellingText.text = card.Spellings;
+
+        // Display Example Sentence
+        exampleSentenceText.text = card.ExampleSentence;
     }
 
     public void PlaySpellingAudio()
     {
-        if (deckCards.Count == 0) return;
+        PlayAudio(deckCards[currentCardIndex].WordAudio);
+    }
 
-        var card = deckCards[currentCardIndex];
-        if (string.IsNullOrEmpty(card.WordAudio) || card.WordAudio == "N/A") return;
+    public void PlaySentenceAudio()
+    {
+        PlayAudio(deckCards[currentCardIndex].WordAudio);
+    }
 
-        // Force Unity to use the correct media path
-        string filePath = Path.Combine(HiraganaDeckInitializer.MediaFolderPath, card.WordAudio);
+    private void PlayAudio(string audioFile)
+    {
+        if (string.IsNullOrEmpty(audioFile) || audioFile == "N/A") return;
+
+        string filePath = Path.Combine(HiraganaDeckInitializer.MediaFolderPath, audioFile);
 
         if (!File.Exists(filePath))
         {
@@ -56,14 +75,11 @@ public class HiraganaSpellingDisplay : MonoBehaviour
         }
 
         lastPlayedAudioPath = filePath;
-
-        // Play audio using UnityWebRequest
         StartCoroutine(PlayAudioClip(filePath));
     }
 
     private IEnumerator PlayAudioClip(string filePath)
     {
-        // Ensure the file path is correctly formatted for Unity
         string url = "file:///" + filePath.Replace("\\", "/");
 
         using (var www = UnityEngine.Networking.UnityWebRequestMultimedia.GetAudioClip(url, AudioType.MPEG))
