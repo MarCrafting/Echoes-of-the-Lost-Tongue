@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HiraganaSpellingDisplay : MonoBehaviour
+public class HiraganaDisplay : MonoBehaviour
 {
     public TextMeshProUGUI spellingText; // Displays the Hiragana spelling
     public TextMeshProUGUI exampleSentenceText; // Displays the Example Sentence

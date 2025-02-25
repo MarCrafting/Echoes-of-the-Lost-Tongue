@@ -46,12 +46,10 @@ public static class HiraganaDeckInitializer
 
                     // Ensure we pull the correct audio file names for both spelling & example sentence
                     WordAudio = fields.ContainsKey("word_audio") && fields.word_audio != null && fields.word_audio.value != null
-        ? fields.word_audio.value.ToString().Replace("[sound:", "").Replace("]", "").Trim()
-        : "N/A",
+                    ? fields.word_audio.value.ToString().Replace("[sound:", "").Replace("]", "").Trim(): "N/A",
 
                     SentenceAudio = fields.ContainsKey("sentence_audio") && fields.sentence_audio != null && fields.sentence_audio.value != null
-        ? fields.sentence_audio.value.ToString().Replace("[sound:", "").Replace("]", "").Trim()
-        : "N/A"
+                    ? fields.sentence_audio.value.ToString().Replace("[sound:", "").Replace("]", "").Trim(): "N/A"
                 });
 
             }
@@ -70,7 +68,7 @@ public static class HiraganaDeckInitializer
     }
 }
 
-// Represents a single Hiragana flashcard.
+// Represents a single Anki Hiragana flashcard.
 public class HiraganaCard
 {
     public string Spellings { get; set; }
