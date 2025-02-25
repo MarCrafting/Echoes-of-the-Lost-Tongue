@@ -35,9 +35,11 @@ public class HiraganaSpellingDisplay : MonoBehaviour
 
         Debug.Log($"Deck successfully loaded! {deckCards.Count} cards found.");
         DisplayCurrentCard();
+
+        //Assign Buttons
+        playSpellingAudioButton.onClick.AddListener(PlaySpellingAudio);
+        playSentenceAudioButton.onClick.AddListener(PlaySentenceAudio);
     }
-
-
 
     private void DisplayCurrentCard()
     {
@@ -54,17 +56,31 @@ public class HiraganaSpellingDisplay : MonoBehaviour
 
     public void PlaySpellingAudio()
     {
+        Debug.Log("Playing Spelling Audio...");
         PlayAudio(deckCards[currentCardIndex].WordAudio);
     }
 
     public void PlaySentenceAudio()
     {
-        PlayAudio(deckCards[currentCardIndex].WordAudio);
+        var card = deckCards[currentCardIndex];
+
+        if (!string.IsNullOrEmpty(card.SentenceAudio) && card.SentenceAudio != "N/A")
+        {
+            PlayAudio(card.SentenceAudio);  //Example sentence audio
+        }
+        else
+        {
+            Debug.LogError("No example sentence audio available for this card.");
+        }
     }
 
     private void PlayAudio(string audioFile)
     {
-        if (string.IsNullOrEmpty(audioFile) || audioFile == "N/A") return;
+        if (string.IsNullOrEmpty(audioFile) || audioFile == "N/A")
+        {
+            Debug.LogWarning("No valid audio file to play.");
+            return;
+        }
 
         string filePath = Path.Combine(HiraganaDeckInitializer.MediaFolderPath, audioFile);
 
