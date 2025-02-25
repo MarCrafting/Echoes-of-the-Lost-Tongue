@@ -7,10 +7,12 @@ using UnityEngine.UI;
 
 public class HiraganaDisplay : MonoBehaviour
 {
-    public TextMeshProUGUI wordText; // Displays the Hiragana spelling
+    public TextMeshProUGUI spellingsText; // Displays the Hiragana Spelling
+    public TextMeshProUGUI wordText; // Displays the Hiragana Example Word
     public TextMeshProUGUI exampleSentenceText; // Displays the Example Sentence
 
-    public Button playSpellingAudioButton; // Button to play the spelling audio
+    public Button playSpellingsAudioButton; // Button to play the spellings audio
+    public Button playWordAudioButton; // Button to play the word audio
     public Button playSentenceAudioButton; // Button to play the example sentence audio
 
     public AudioSource audioSource;
@@ -37,7 +39,8 @@ public class HiraganaDisplay : MonoBehaviour
         DisplayCurrentCard();
 
         //Assign Buttons
-        playSpellingAudioButton.onClick.AddListener(PlaySpellingAudio);
+        playSpellingsAudioButton.onClick.AddListener(PlaySpellingsAudio);
+        playWordAudioButton.onClick.AddListener(PlayWordAudio);
         playSentenceAudioButton.onClick.AddListener(PlaySentenceAudio);
     }
 
@@ -47,17 +50,34 @@ public class HiraganaDisplay : MonoBehaviour
 
         var card = deckCards[currentCardIndex];
 
-        // Display Spelling
+        // Display Example Word
         wordText.text = card.ExampleWord;
 
         // Display Example Sentence
         exampleSentenceText.text = card.ExampleSentence;
+
+        // Display Spellings Text
+        spellingsText.text = card.Spellings;
     }
 
-    public void PlaySpellingAudio()
+    public void PlayWordAudio()
     {
-        Debug.Log("Playing Spelling Audio...");
-        PlayAudio(deckCards[currentCardIndex].SpellingsAudio);
+        Debug.Log("Playing Word Audio...");
+        PlayAudio(deckCards[currentCardIndex].WordAudio);
+    }
+
+    public void PlaySpellingsAudio()
+    {
+        var card = deckCards[currentCardIndex];
+
+        if (!string.IsNullOrEmpty(card.SpellingsAudio) && card.SpellingsAudio != "N/A")
+        {
+            PlayAudio(card.SpellingsAudio);  //Example Spellings audio
+        }
+        else
+        {
+            Debug.LogError("No example sentence audio available for this card.");
+        }
     }
 
     public void PlaySentenceAudio()
@@ -120,8 +140,11 @@ public class HiraganaDisplay : MonoBehaviour
         // Toggle Example Sentence
         exampleSentenceText.text = isCurrentlyJapanese ? card.SentenceTranslation : card.ExampleSentence;
 
-        // Toggle Spellings Field
+        // Toggle Word Field
         wordText.text = isCurrentlyJapanese ? card.WordTranslation : card.ExampleWord;
+
+        // Toggle Spellings Field
+        spellingsText.text = isCurrentlyJapanese ? card.SpellingsTranslation : card.Spellings;
     }
 
 
