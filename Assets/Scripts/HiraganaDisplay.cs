@@ -57,7 +57,7 @@ public class HiraganaDisplay : MonoBehaviour
     public void PlaySpellingAudio()
     {
         Debug.Log("Playing Spelling Audio...");
-        PlayAudio(deckCards[currentCardIndex].WordAudio);
+        PlayAudio(deckCards[currentCardIndex].SpellingsAudio);
     }
 
     public void PlaySentenceAudio()
@@ -93,6 +93,37 @@ public class HiraganaDisplay : MonoBehaviour
         lastPlayedAudioPath = filePath;
         StartCoroutine(PlayAudioClip(filePath));
     }
+
+    // R key press will replay last played audio (last playback button pressed)
+    public void ReplayAudio()
+    {
+        if (!string.IsNullOrEmpty(lastPlayedAudioPath))
+        {
+            PlayAudio(lastPlayedAudioPath);
+        }
+        else
+        {
+            Debug.LogWarning("No audio has been played yet.");
+        }
+    }
+
+    // T key will translate all of the Hiragana fields to English
+    public void ToggleTranslation()
+    {
+        if (deckCards.Count == 0) return;
+
+        var card = deckCards[currentCardIndex];
+
+        // Check if the text is currently in Japanese or English
+        bool isCurrentlyJapanese = exampleSentenceText.text == card.ExampleSentence;
+
+        // Toggle Example Sentence
+        exampleSentenceText.text = isCurrentlyJapanese ? card.SentenceTranslation : card.ExampleSentence;
+
+        // Toggle Spellings Field
+        spellingText.text = isCurrentlyJapanese ? card.WordTranslation : card.Spellings;
+    }
+
 
     private IEnumerator PlayAudioClip(string filePath)
     {
