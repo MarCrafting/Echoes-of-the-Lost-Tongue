@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 427954756}
   - component: {fileID: 427954758}
   - component: {fileID: 427954757}
+  - component: {fileID: 427954759}
   m_Layer: 5
   m_Name: ShortcutPopup
   m_TagString: Untagged
@@ -196,6 +197,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 427954755}
   m_CullTransparentMesh: 1
+--- !u!114 &427954759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427954755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf59d3d447822714eb536dd6fa479b0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shortcutDisplay: {fileID: 470165834}
 --- !u!1 &445316450
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,7 +357,6 @@ GameObject:
   - component: {fileID: 470165833}
   - component: {fileID: 470165834}
   - component: {fileID: 470165835}
-  - component: {fileID: 470165836}
   m_Layer: 0
   m_Name: LessonManager
   m_TagString: Untagged
@@ -398,19 +411,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shortcutPopup: {fileID: 427954755}
---- !u!114 &470165836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 470165831}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf59d3d447822714eb536dd6fa479b0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shortcutDisplay: {fileID: 0}
 --- !u!1 &657760525
 GameObject:
   m_ObjectHideFlags: 0

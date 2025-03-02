@@ -10,7 +10,7 @@ public static class HiraganaDeckInitializer
     private static List<HiraganaCard> DeckCards = new();
 
     // Centralized media path for audio playback.
-    public static string MediaFolderPath = @"C:\Users\AVI\AppData\LocalLow\DefaultCompany\Echoes of the Lost Tongue\AnkiMedia";
+    public static string MediaFolderPath = @"C:\Users\marcu\AppData\LocalLow\DefaultCompany\Echoes of the Lost Tongue\AnkiMedia";
 
     public static async Task InitializeDeckAsync(string deckName)
     {
