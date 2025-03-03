@@ -1,1 +1,0 @@
-This folder stores sound effects and music.

@@ -2,21 +2,24 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Mono.Cecil;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 public static class HiraganaDeckInitializer
 {
     private static List<HiraganaCard> DeckCards = new();
 
     // Centralized media path for audio playback.
-    public static string MediaFolderPath = @"C:\Users\marcu\AppData\LocalLow\DefaultCompany\Echoes of the Lost Tongue\AnkiMedia";
+    public static string MediaFolderPath = Path.Combine(Application.dataPath, "Audio/AnkiMedia");
 
     public static async Task InitializeDeckAsync(string deckName)
     {
         try
         {
-            Debug.Log($"Fetching cards from deck: {deckName}");
+            // Debug.Log($"Fetching cards from deck: {deckName}");
+            Debug.Log(MediaFolderPath);
 
             var query = "deck:*Hiragana";
             var cardIdsJson = await AnkiAPIHelper.InvokeAsync("findCards", new { query });
