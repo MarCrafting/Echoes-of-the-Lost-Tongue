@@ -18,8 +18,7 @@ public static class HiraganaDeckInitializer
     {
         try
         {
-            // Debug.Log($"Fetching cards from deck: {deckName}");
-            Debug.Log(MediaFolderPath);
+            Debug.Log($"Fetching cards from deck: {deckName}");
 
             var query = "deck:*Hiragana";
             var cardIdsJson = await AnkiAPIHelper.InvokeAsync("findCards", new { query });
