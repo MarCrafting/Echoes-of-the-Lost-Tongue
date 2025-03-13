@@ -20,7 +20,7 @@ ModelImporter:
     second: //RootNode
   - first:
       43: 4300000
-    second: "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+    second: "AE_\u0421urbstone_04"
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -115,10 +115,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 170162
-  packageName: Japanese Street
-  packageVersion: 1.6
-  assetPath: Assets/Japanese_Street/Models/Street/AE_Curbstone_04.fbx
-  uploadId: 666761

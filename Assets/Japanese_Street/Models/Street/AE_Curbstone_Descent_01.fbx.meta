@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 88d681aaf030704478f214797458c2e0
+guid: 8f85863f0235d9c4f96bcfc678c3fa49
 ModelImporter:
   serializedVersion: 25
   internalIDToNameTable:
@@ -20,7 +20,7 @@ ModelImporter:
     second: //RootNode
   - first:
       43: 4300000
-    second: "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+    second: "AE_\u0421urbstone_Descent_01"
   - first:
       43: 4300002
     second: AE_Sidewalk_Descent_01
@@ -118,10 +118,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 170162
-  packageName: Japanese Street
-  packageVersion: 1.6
-  assetPath: Assets/Japanese_Street/Models/Street/AE_Curbstone_Descent_01.fbx
-  uploadId: 666761
