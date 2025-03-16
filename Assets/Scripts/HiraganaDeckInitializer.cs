@@ -48,6 +48,7 @@ public static class HiraganaDeckInitializer
                     WordTranslation = fields.ContainsKey("Word Translation") ? fields["Word Translation"].value ?? "N/A" : "N/A",
                     ExampleSentence = fields.ContainsKey("Example Sentence") ? fields["Example Sentence"].value ?? "N/A" : "N/A",
                     SentenceTranslation = fields.ContainsKey("Sentence Translation") ? fields["Sentence Translation"].value ?? "N/A" : "N/A",
+                    Pronunciation = fields.ContainsKey("Sound") ? fields["Sound"].value ?? "N/A" : "N/A",
 
                     // Ensure we pull the correct audio file names for both spelling & example sentence
                     WordAudio = fields.ContainsKey("word_audio") && fields.word_audio != null && fields.word_audio.value != null
@@ -90,4 +91,5 @@ public class HiraganaCard
     public string WordAudio { get; set; }
     public string SentenceAudio { get; set; }
     public string SpellingsAudio { get; set; }
+    public string Pronunciation { get; set; }
 }

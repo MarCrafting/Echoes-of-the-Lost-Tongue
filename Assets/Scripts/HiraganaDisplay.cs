@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class HiraganaDisplay : MonoBehaviour
 {
     public TextMeshProUGUI spellingsText; // Displays the Hiragana Spelling
+    public TextMeshProUGUI pronunciationText; // Displays the Hiragana Pronunciation
     public TextMeshProUGUI wordText; // Displays the Hiragana Example Word
     public TextMeshProUGUI exampleSentenceText; // Displays the Example Sentence
     
@@ -61,6 +62,7 @@ public class HiraganaDisplay : MonoBehaviour
 
         // Display Hiragana by default
         spellingsText.text = card.Spellings;
+        pronunciationText.text = card.Pronunciation;
         wordText.text = card.ExampleWord;
         exampleSentenceText.text = card.ExampleSentence;
         
