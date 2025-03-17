@@ -139,7 +139,7 @@ public class HiraganaDisplay : MonoBehaviour
         bool isCurrentlyJapanese = spellingsText.text == card.Spellings;
 
         // Toggle text fields to English or back to Japanese
-        spellingsText.text = isCurrentlyJapanese ? card.Pronunciation : card.Spellings;
+        // spellingsText.text = isCurrentlyJapanese ? card.Pronunciation : card.Spellings;
         wordText.text = isCurrentlyJapanese ? card.WordTranslation : card.ExampleWord;
         exampleSentenceText.text = isCurrentlyJapanese ? card.SentenceTranslation : card.ExampleSentence;
     }
