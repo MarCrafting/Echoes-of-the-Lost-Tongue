@@ -28,5 +28,10 @@ public class ThirdPersonMovement : MonoBehaviour
             Vector3 moveDir = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+            speed *= 1.5f;
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+            speed = 6;
     }
 }

@@ -43,12 +43,11 @@ public static class HiraganaDeckInitializer
                 DeckCards.Add(new HiraganaCard
                 {
                     Spellings = fields.ContainsKey("Spellings") ? fields["Spellings"].value ?? "N/A" : "N/A",
-                    SpellingsTranslation = fields.ContainsKey("Sound") ? fields["Sound"].value ?? "N/A" : "N/A",
+                    Pronunciation = fields.ContainsKey("Sound") ? fields["Sound"].value ?? "N/A" : "N/A",
                     ExampleWord = fields.ContainsKey("Example Word") ? fields["Example Word"].value ?? "N/A" : "N/A",
                     WordTranslation = fields.ContainsKey("Word Translation") ? fields["Word Translation"].value ?? "N/A" : "N/A",
                     ExampleSentence = fields.ContainsKey("Example Sentence") ? fields["Example Sentence"].value ?? "N/A" : "N/A",
                     SentenceTranslation = fields.ContainsKey("Sentence Translation") ? fields["Sentence Translation"].value ?? "N/A" : "N/A",
-                    Pronunciation = fields.ContainsKey("Sound") ? fields["Sound"].value ?? "N/A" : "N/A",
 
                     // Ensure we pull the correct audio file names for both spelling & example sentence
                     WordAudio = fields.ContainsKey("word_audio") && fields.word_audio != null && fields.word_audio.value != null
@@ -83,7 +82,7 @@ public static class HiraganaDeckInitializer
 public class HiraganaCard
 {
     public string Spellings { get; set; }
-    public string SpellingsTranslation { get; set; }
+    public string Pronunciation { get; set; }
     public string ExampleWord { get; set; }
     public string WordTranslation { get; set; }
     public string ExampleSentence { get; set; }
@@ -91,5 +90,4 @@ public class HiraganaCard
     public string WordAudio { get; set; }
     public string SentenceAudio { get; set; }
     public string SpellingsAudio { get; set; }
-    public string Pronunciation { get; set; }
 }
