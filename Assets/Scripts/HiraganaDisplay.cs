@@ -19,7 +19,7 @@ public class HiraganaDisplay : MonoBehaviour
     public AudioSource audioSource;
 
     private List<HiraganaCard> deckCards;
-    private int currentCardIndex = 0;
+    public int currentCardIndex = 0;
     private string lastPlayedAudioPath = "";
     
 
