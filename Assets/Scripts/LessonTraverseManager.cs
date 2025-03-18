@@ -4,7 +4,7 @@ public class LessonTraverseManager : MonoBehaviour
 {
     public GameObject lessonBackCanvas;  // reference to back side of cards (canvas)
     public GameObject lessonFrontPrevButton;    // reference to front side previous button
-    private HiraganaDisplay display;    // reference to hiragana deck
+    public HiraganaDisplay display;    // reference to hiragana deck
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

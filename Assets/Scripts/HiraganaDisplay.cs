@@ -8,7 +8,9 @@ using UnityEngine.UI;
 public class HiraganaDisplay : MonoBehaviour
 {
     public TextMeshProUGUI spellingsText; // Displays the Hiragana Spelling
+    public TextMeshProUGUI spellingsTextBack; // Displays the Hiragana Spelling on the back side
     public TextMeshProUGUI pronunciationText; // Displays the Hiragana Pronunciation
+    public TextMeshProUGUI pronunciationTextBack; // Displays the Hiragana Pronunciation on the back side
     public TextMeshProUGUI wordText; // Displays the Hiragana Example Word
     public TextMeshProUGUI exampleSentenceText; // Displays the Example Sentence
     
@@ -62,7 +64,9 @@ public class HiraganaDisplay : MonoBehaviour
 
         // Display Hiragana by default
         spellingsText.text = card.Spellings;
+        spellingsTextBack.text = spellingsText.text;
         pronunciationText.text = card.Pronunciation;
+        pronunciationTextBack.text = pronunciationText.text;
         wordText.text = card.ExampleWord;
         exampleSentenceText.text = card.ExampleSentence;
         
@@ -136,7 +140,7 @@ public class HiraganaDisplay : MonoBehaviour
         var card = deckCards[currentCardIndex];
 
         // Check if the spellings text is currently in Japanese or English
-        bool isCurrentlyJapanese = spellingsText.text == card.Spellings;
+        bool isCurrentlyJapanese = wordText.text == card.ExampleWord;
 
         // Toggle text fields to English or back to Japanese
         // spellingsText.text = isCurrentlyJapanese ? card.Pronunciation : card.Spellings;

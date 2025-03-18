@@ -733,14 +733,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6c7492bac4582745b84e94aef15e06b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spellingsText: {fileID: 1173230532}
-  pronunciationText: {fileID: 1598792423}
+  spellingsText: {fileID: 2012800973}
+  spellingsTextBack: {fileID: 1173230532}
+  pronunciationText: {fileID: 1535056038}
+  pronunciationTextBack: {fileID: 1598792423}
   wordText: {fileID: 886431053}
   exampleSentenceText: {fileID: 1506688248}
   playSpellingsAudioButton: {fileID: 2059733793}
   playWordAudioButton: {fileID: 1860033808}
   playSentenceAudioButton: {fileID: 1984495079}
   audioSource: {fileID: 1749717268}
+  currentCardIndex: 0
 --- !u!114 &470165835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -766,7 +769,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a774b32dc04b8a43bc680c547668ca2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lessonBackPopUp: {fileID: 1298050810}
+  lessonBackCanvas: {fileID: 1298050810}
+  lessonFrontPrevButton: {fileID: 314361397}
+  display: {fileID: 0}
 --- !u!1 &475299499
 GameObject:
   m_ObjectHideFlags: 0
@@ -2117,7 +2122,7 @@ GameObject:
   - component: {fileID: 1173230533}
   - component: {fileID: 1173230532}
   m_Layer: 5
-  m_Name: charactersText
+  m_Name: charactersTextBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2860,7 +2865,7 @@ GameObject:
   - component: {fileID: 1535056039}
   - component: {fileID: 1535056038}
   m_Layer: 5
-  m_Name: characterPronunciation
+  m_Name: characterPronunciationFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3189,7 +3194,7 @@ GameObject:
   - component: {fileID: 1598792424}
   - component: {fileID: 1598792423}
   m_Layer: 5
-  m_Name: characterPronunciation
+  m_Name: characterPronunciationBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4031,7 +4036,7 @@ GameObject:
   - component: {fileID: 2012800974}
   - component: {fileID: 2012800973}
   m_Layer: 5
-  m_Name: charactersText
+  m_Name: charactersTextFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
