@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShortcutKeyHandler : MonoBehaviour
 {
@@ -23,7 +24,8 @@ public class ShortcutKeyHandler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("Next Section Triggered");
-            shortcutDisplay.NextSection();
+            // shortcutDisplay.NextSection();
+            Object.FindAnyObjectByType<Button>().onClick.Invoke();
         }
 
         if (Input.GetKeyDown(KeyCode.Backspace))
