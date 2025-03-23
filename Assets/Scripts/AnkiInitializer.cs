@@ -1,7 +1,5 @@
 using UnityEngine;
-using System.Threading.Tasks;
-using System.Net.Http;
-using Newtonsoft.Json; // Use Newtonsoft for JSON parsing
+
 
 public class AnkiInitializer : MonoBehaviour
 {
