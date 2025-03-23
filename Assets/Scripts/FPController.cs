@@ -11,18 +11,19 @@ public class FPSController : MonoBehaviour
     public Transform cameraTransform;   // MainCamera
     public float mouseSensitivity = 100f;
     private float xRotation = 0f;
-    private float yRotation = 0f;       // New for third-person Y-axis rotation
+    private float yRotation = 0f;
 
     // View mode and transition
     private bool isFirstPerson = true;
     private bool isTransitioning = false;
     private bool isStartingSkyView = true;
+    private bool isPostTransitionFrame = false;
     private float transitionDuration = 2f;
     private float transitionTime = 0f;
     private Vector3 firstPersonPos = new Vector3(0f, 0.95f, 0f);
-    private Vector3 thirdPersonPos = new Vector3(0f, 1.5f, -3f);
+    private Vector3 thirdPersonPos = new Vector3(0f, 0.95f, -5f);
     private Quaternion skyRotation = Quaternion.Euler(-90f, 0f, 0f);
-    private Quaternion thirdPersonRot = Quaternion.Euler(20f, 0f, 0f);
+    private Quaternion thirdPersonRot = Quaternion.Euler(10f, 0f, 0f);
 
     void Start()
     {
@@ -33,15 +34,13 @@ public class FPSController : MonoBehaviour
         }
         Cursor.lockState = CursorLockMode.Locked;
 
-        // Start locked looking at sky once game boots
         cameraTransform.localPosition = firstPersonPos;
         cameraTransform.localRotation = skyRotation;
         isFirstPerson = true;
         isStartingSkyView = true;
 
-        // Initialize third-person rotation
-        yRotation = transform.eulerAngles.y; // Match player's initial Y rotation
-        xRotation = 20f; // Match thirdPersonRot's initial X angle
+        xRotation = -90f;
+        yRotation = transform.eulerAngles.y;
     }
 
     void Update()
@@ -49,7 +48,10 @@ public class FPSController : MonoBehaviour
         // Movement
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
-        Vector3 move = transform.right * x + transform.forward * z;
+        Vector3 moveDirection = isFirstPerson ? transform.forward : cameraTransform.forward;
+        moveDirection.y = 0f;
+        moveDirection = moveDirection.normalized;
+        Vector3 move = moveDirection * z + cameraTransform.right * x;
         move = move.normalized * moveSpeed * Time.deltaTime;
 
         // Gravity and Jumping
@@ -65,27 +67,23 @@ public class FPSController : MonoBehaviour
         controller.Move(move + velocity * Time.deltaTime);
 
         // Mouse Look
-        if (!isTransitioning && !isStartingSkyView && cameraTransform != null)
+        if (!isStartingSkyView && cameraTransform != null)
         {
-            if (isFirstPerson)
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+
+            if (isFirstPerson && !isTransitioning)
             {
-                float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-                float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
                 xRotation -= mouseY;
                 xRotation = Mathf.Clamp(xRotation, -90f, 90f);
                 cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
                 transform.Rotate(Vector3.up * mouseX);
             }
-            else
+            else if (!isTransitioning && !isPostTransitionFrame)
             {
-                // Third-person mouse look
-                float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-                float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-
-                yRotation += mouseX; // Horizontal orbit
-                xRotation -= mouseY; // Vertical orbit
-                xRotation = Mathf.Clamp(xRotation, -10f, 80f); // Limit vertical angle
-
+                yRotation += mouseX;
+                xRotation -= mouseY;
+                xRotation = Mathf.Clamp(xRotation, -90f, 30f); // Stricter limit
                 UpdateThirdPersonCamera();
             }
         }
@@ -96,7 +94,7 @@ public class FPSController : MonoBehaviour
             cameraTransform.localRotation = skyRotation;
         }
 
-        // Transition first person to third person camera views
+        // Transition
         if (isTransitioning)
         {
             transitionTime += Time.deltaTime;
@@ -105,12 +103,26 @@ public class FPSController : MonoBehaviour
             {
                 t = 1f;
                 isTransitioning = false;
+                xRotation = thirdPersonRot.eulerAngles.x; // 10f
+                yRotation = transform.eulerAngles.y;
+                cameraTransform.position = transform.position + thirdPersonRot * thirdPersonPos;
+                cameraTransform.localRotation = thirdPersonRot;
+                isPostTransitionFrame = true;
             }
-            cameraTransform.localPosition = Vector3.Lerp(firstPersonPos, thirdPersonPos, t);
-            cameraTransform.localRotation = Quaternion.Slerp(skyRotation, thirdPersonRot, t);
+            else
+            {
+                cameraTransform.localPosition = Vector3.Lerp(firstPersonPos, thirdPersonPos, t);
+                cameraTransform.localRotation = Quaternion.Slerp(skyRotation, thirdPersonRot, t);
+            }
         }
 
-        // Test trigger - will replace with new game / continue game buttons logic rather than 'N' key press
+        // Clear buffer frame
+        if (isPostTransitionFrame)
+        {
+            isPostTransitionFrame = false;
+        }
+
+        // Test trigger - replace with New Button / Continue Button logic OnClick()
         if (Input.GetKeyDown(KeyCode.N))
         {
             StartTransitionToThirdPerson();
@@ -119,11 +131,17 @@ public class FPSController : MonoBehaviour
 
     void UpdateThirdPersonCamera()
     {
-        // Calculate rotation and position for third-person orbit
         Quaternion rotation = Quaternion.Euler(xRotation, yRotation, 0f);
-        Vector3 direction = rotation * Vector3.forward;
-        cameraTransform.position = transform.position + rotation * (thirdPersonPos.z * Vector3.forward + thirdPersonPos.y * Vector3.up);
-        cameraTransform.LookAt(transform.position + Vector3.up * 0.95f); // Look at player's head height
+        Vector3 newPosition = transform.position + rotation * thirdPersonPos;
+
+        // Prevent camera from going below character base (Y=0)
+        if (newPosition.y < transform.position.y)
+        {
+            newPosition.y = transform.position.y; // Clamp to character base
+        }
+
+        cameraTransform.position = newPosition;
+        cameraTransform.localRotation = rotation;
     }
 
     public void StartTransitionToThirdPerson()
