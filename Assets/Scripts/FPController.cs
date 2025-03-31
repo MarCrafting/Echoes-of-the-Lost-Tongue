@@ -27,6 +27,10 @@ public class FPController : MonoBehaviour
 
     // UI
     public Button startGameButton;
+    public bool isInputEnabled = true; // Already exists for movement control
+    public GameObject endGameCanvas; // New: Reference to EndGameCanvas
+    public Button quitButton; // New: Reference to QuitButton
+    private bool isEndGameActive = false; // New: Track end game menu state
 
     void Start()
     {
@@ -56,50 +60,78 @@ public class FPController : MonoBehaviour
         {
             Debug.LogError("Start Game Button not assigned!");
         }
+
+        // Initialize end game menu
+        if (endGameCanvas != null)
+        {
+            endGameCanvas.SetActive(false);
+            if (quitButton != null)
+            {
+                quitButton.onClick.AddListener(QuitGame);
+            }
+            else
+            {
+                Debug.LogError("QuitButton not assigned in the Inspector!");
+            }
+        }
+        else
+        {
+            Debug.LogError("EndGameCanvas not assigned in the Inspector!");
+        }
     }
 
     void Update()
     {
-        // Movement
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-        Vector3 moveDirection = isFirstPerson ? transform.forward : cameraTransform.forward;
-        moveDirection.y = 0f;
-        moveDirection = moveDirection.normalized;
-        Vector3 move = moveDirection * z + cameraTransform.right * x;
-        move = move.normalized * moveSpeed * Time.deltaTime;
-
-        // Gravity and Jumping
-        if (controller.isGrounded)
+        // Check for Q key to toggle end game menu
+        if (Input.GetKeyDown(KeyCode.Q))
         {
-            velocity.y = -2f;
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            }
+            EndGame(!isEndGameActive);
         }
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(move + velocity * Time.deltaTime);
 
-        // Mouse Look
-        if (!isStartingSkyView && cameraTransform != null)
+        // Only process movement and mouse look if input is enabled and not in sky view/transition
+        if (isInputEnabled && !isStartingSkyView && !isTransitioning)
         {
-            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+            // Movement
+            float x = Input.GetAxis("Horizontal");
+            float z = Input.GetAxis("Vertical");
+            Vector3 moveDirection = isFirstPerson ? transform.forward : cameraTransform.forward;
+            moveDirection.y = 0f;
+            moveDirection = moveDirection.normalized;
+            Vector3 move = moveDirection * z + cameraTransform.right * x;
+            move = move.normalized * moveSpeed * Time.deltaTime;
 
-            if (isFirstPerson && !isTransitioning)
+            // Gravity and Jumping
+            if (controller.isGrounded)
             {
-                xRotation -= mouseY;
-                xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-                cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-                transform.Rotate(Vector3.up * mouseX);
+                velocity.y = -2f;
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                }
             }
-            else if (!isTransitioning)
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(move + velocity * Time.deltaTime);
+
+            // Mouse Look
+            if (cameraTransform != null)
             {
-                yRotation += mouseX;
-                xRotation -= mouseY;
-                xRotation = Mathf.Clamp(xRotation, -90f, 30f);
-                UpdateThirdPersonCamera();
+                float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+                float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+
+                if (isFirstPerson)
+                {
+                    xRotation -= mouseY;
+                    xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+                    cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+                    transform.Rotate(Vector3.up * mouseX);
+                }
+                else
+                {
+                    yRotation += mouseX;
+                    xRotation -= mouseY;
+                    xRotation = Mathf.Clamp(xRotation, -90f, 30f);
+                    UpdateThirdPersonCamera();
+                }
             }
         }
 
@@ -165,5 +197,42 @@ public class FPController : MonoBehaviour
             transitionTime = 0f;
             isFirstPerson = false;
         }
+    }
+
+    public void EndGame(bool activate)
+    {
+        if (endGameCanvas != null)
+        {
+            isEndGameActive = activate;
+            endGameCanvas.SetActive(activate);
+            Debug.Log($"End game menu set to active: {activate}");
+
+            if (activate)
+            {
+                isInputEnabled = false;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else
+            {
+                isInputEnabled = true;
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+        }
+        else
+        {
+            Debug.LogError("EndGame() failed: endGameCanvas is null.");
+        }
+    }
+
+    private void QuitGame()
+    {
+        Debug.Log("Quitting game...");
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }

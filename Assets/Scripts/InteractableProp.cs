@@ -7,12 +7,11 @@ public class InteractableProp : MonoBehaviour
     public string interactionText = "Press E to interact";
     public GameObject uiTextObject;
     public GameObject lessonContainer;
-    public FPController fpsController;
+    public FPController fpsController; // Changed from FPSController to FPController
 
     private TextMeshProUGUI displayText;
     private Transform player;
     private bool isPlayerNear = false;
-    private HiraganaDisplay hiraganaDisplay;
 
     void Start()
     {
@@ -43,14 +42,13 @@ public class InteractableProp : MonoBehaviour
         {
             if (fpsController == null)
             {
-                Debug.LogError("FPSController not assigned in the Inspector on " + gameObject.name);
+                Debug.LogError("FPController not assigned in the Inspector on " + gameObject.name);
             }
         }
 
         if (lessonContainer != null)
         {
             lessonContainer.SetActive(false);
-            hiraganaDisplay = lessonContainer.GetComponent<HiraganaDisplay>();
             Debug.Log("LessonContainer initialized: " + lessonContainer.name);
         }
         else
@@ -75,7 +73,7 @@ public class InteractableProp : MonoBehaviour
         }
 
         float distance = Vector3.Distance(transform.position, player.position);
-        Debug.Log($"Distance to player: {distance} (interactionDistance: {interactionDistance})");
+        //Debug.Log($"Distance to player: {distance} (interactionDistance: {interactionDistance})");
 
         if (distance <= interactionDistance)
         {
@@ -106,12 +104,12 @@ public class InteractableProp : MonoBehaviour
                 if (!lessonContainer.activeSelf)
                 {
                     Debug.Log("E pressed, activating lesson container...");
-                    Interact(true); // Activate
+                    ToggleLessonContainer(true); // Activate
                 }
                 else
                 {
                     Debug.Log("E pressed again, deactivating lesson container...");
-                    Interact(false); // Deactivate
+                    ToggleLessonContainer(false); // Deactivate
                 }
             }
         }
@@ -130,24 +128,30 @@ public class InteractableProp : MonoBehaviour
         }
     }
 
-    void Interact(bool activate)
+    void ToggleLessonContainer(bool activate)
     {
-        if (lessonContainer != null)
+        if (lessonContainer != null && fpsController != null)
         {
             lessonContainer.SetActive(activate);
-            if (activate && hiraganaDisplay != null)
+            if (activate)
             {
-                hiraganaDisplay.DisplayHiragana();
-                Debug.Log("Lesson container activated and DisplayHiragana called.");
-            }
-            if (displayText != null)
-            {
-                if (activate)
+                // Disable player input and show cursor
+                fpsController.isInputEnabled = false;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                if (displayText != null)
                 {
                     displayText.text = "";
-                    Debug.Log("Text cleared on activation.");
+                    Debug.Log("Text cleared on activation, input disabled.");
                 }
-                else if (isPlayerNear)
+            }
+            else
+            {
+                // Re-enable player input and lock cursor
+                fpsController.isInputEnabled = true;
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                if (displayText != null && isPlayerNear)
                 {
                     displayText.text = interactionText;
                     Debug.Log("Text restored on deactivation: " + interactionText);
