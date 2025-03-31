@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Mono.Cecil;
 using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.Timeline;
 
 public static class HiraganaDeckInitializer
 {

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
@@ -18,38 +18,52 @@ public class HiraganaDisplay : MonoBehaviour
     public Button playWordAudioButton; // Button to play the word audio
     public Button playSentenceAudioButton; // Button to play the example sentence audio
 
+    public Button playSpellingsAudioButton;
+    public Button playWordAudioButton;
+    public Button playSentenceAudioButton;
+
     public AudioSource audioSource;
 
     private List<HiraganaCard> deckCards;
     public int currentCardIndex = 0;
     private string lastPlayedAudioPath = "";
-    
+    private bool isInitialized = false;
 
-    private async void Start()
+    // Called when the object is first created
+    void Start()
     {
-        Debug.Log("Initializing Hiragana deck...");
-
-        await HiraganaDeckInitializer.InitializeDeckAsync("Japanese Phonetic Writing System - Free Refold Deck::Refold Hiragana");
-
-        deckCards = HiraganaDeckInitializer.GetDeckCards();
-
-        if (deckCards == null || deckCards.Count == 0)
-        {
-            Debug.LogError("Deck is empty or not initialized. Check Anki response.");
-            return;
-        }
-
-        Debug.Log($"Deck successfully loaded! {deckCards.Count} cards found.");
-        DisplayCurrentCard();
-
-        // Assign Buttons
+        // Assign button listeners once
         playSpellingsAudioButton.onClick.AddListener(PlaySpellingsAudio);
         playWordAudioButton.onClick.AddListener(PlayWordAudio);
         playSentenceAudioButton.onClick.AddListener(PlaySentenceAudio);
     }
 
+    // Public method to trigger or re-trigger the lesson display
+    public async void DisplayHiragana()
+    {
+        if (!isInitialized)
+        {
+            Debug.Log("Initializing Hiragana deck...");
+            await HiraganaDeckInitializer.InitializeDeckAsync("Japanese Phonetic Writing System - Free Refold Deck::Refold Hiragana");
+            deckCards = HiraganaDeckInitializer.GetDeckCards();
+
+            if (deckCards == null || deckCards.Count == 0)
+            {
+                Debug.LogError("Deck is empty or not initialized. Check Anki response.");
+                return;
+            }
+
+            Debug.Log($"Deck successfully loaded! {deckCards.Count} cards found.");
+            isInitialized = true;
+        }
+
+        DisplayCurrentCard();
+    }
+
     private void Update()
     {
+        if (!gameObject.activeSelf) return; // Only process input when active
+
         if (Input.GetKeyDown(KeyCode.Space)) NextSection();
         if (Input.GetKeyDown(KeyCode.Backspace)) PreviousSection();
         if (Input.GetKeyDown(KeyCode.R)) ReplayAudio();
@@ -58,18 +72,16 @@ public class HiraganaDisplay : MonoBehaviour
 
     private void DisplayCurrentCard()
     {
-        if (deckCards.Count == 0) return;
+        if (deckCards == null || deckCards.Count == 0) return;
 
         var card = deckCards[currentCardIndex];
 
-        // Display Hiragana by default
         spellingsText.text = card.Spellings;
         spellingsTextBack.text = spellingsText.text;
         pronunciationText.text = card.Pronunciation;
         pronunciationTextBack.text = pronunciationText.text;
         wordText.text = card.ExampleWord;
         exampleSentenceText.text = card.ExampleSentence;
-        
     }
 
     public void PlayWordAudio()
@@ -80,10 +92,9 @@ public class HiraganaDisplay : MonoBehaviour
     public void PlaySpellingsAudio()
     {
         var card = deckCards[currentCardIndex];
-
         if (!string.IsNullOrEmpty(card.SpellingsAudio) && card.SpellingsAudio != "N/A")
         {
-            PlayAudio(card.SpellingsAudio);  // Example Spellings audio
+            PlayAudio(card.SpellingsAudio);
         }
         else
         {
@@ -94,10 +105,9 @@ public class HiraganaDisplay : MonoBehaviour
     public void PlaySentenceAudio()
     {
         var card = deckCards[currentCardIndex];
-
         if (!string.IsNullOrEmpty(card.SentenceAudio) && card.SentenceAudio != "N/A")
         {
-            PlayAudio(card.SentenceAudio);  // Example sentence audio
+            PlayAudio(card.SentenceAudio);
         }
         else
         {
@@ -135,20 +145,15 @@ public class HiraganaDisplay : MonoBehaviour
 
     public void ToggleTranslation()
     {
-        if (deckCards.Count == 0) return;
+        if (deckCards == null || deckCards.Count == 0) return;
 
         var card = deckCards[currentCardIndex];
-
         // Check if the spellings text is currently in Japanese or English
         bool isCurrentlyJapanese = wordText.text == card.ExampleWord;
 
-        // Toggle text fields to English or back to Japanese
-        // spellingsText.text = isCurrentlyJapanese ? card.Pronunciation : card.Spellings;
         wordText.text = isCurrentlyJapanese ? card.WordTranslation : card.ExampleWord;
         exampleSentenceText.text = isCurrentlyJapanese ? card.SentenceTranslation : card.ExampleSentence;
     }
-
-
 
     public void NextSection()
     {
