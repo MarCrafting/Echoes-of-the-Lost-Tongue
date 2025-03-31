@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FPSController : MonoBehaviour
+public class FPController : MonoBehaviour
 {
     private CharacterController controller;
     public float moveSpeed = 5f;
@@ -16,8 +16,8 @@ public class FPSController : MonoBehaviour
 
     // View mode and transition
     private bool isFirstPerson = true;
-    private bool isTransitioning = false;
-    private bool isStartingSkyView = true;
+    public bool isTransitioning = false;
+    public bool isStartingSkyView = true;
     private float transitionDuration = 2f;
     private float transitionTime = 0f;
     private Vector3 firstPersonPos = new Vector3(0f, 0.95f, 0f);
