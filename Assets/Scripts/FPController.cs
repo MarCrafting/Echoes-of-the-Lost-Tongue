@@ -82,8 +82,8 @@ public class FPController : MonoBehaviour
 
     void Update()
     {
-        // Check for Q key to toggle end game menu
-        if (Input.GetKeyDown(KeyCode.Q))
+        // Toggle end game menu with either Q or Escape key
+        if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Escape))
         {
             EndGame(!isEndGameActive);
         }
