@@ -9,7 +9,7 @@
 
 ## Anki Setup
 1. Download Anki
-   * Head over to [Anki's download page](aaps.ankiweb.net) and click "Download" to get Anki on your computer.
+   * Head over to [Anki's download page](https://apps.ankiweb.net) and click "Download" to get Anki on your computer.
 2. Install Anki-Connect
    * Open the ```Install Add-on``` dialog by selecting ```Tools```|```Add-ons```|```Get Add-ons...``` in Anki.
    * Input ```2055492159``` into the text box labeled ```Code``` and press the ```OK``` button to proceed.
